@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <style>
+    html, body { margin: 0; padding: 0; }
+    body {
+      width: 1080px; height: 1350px;
+      background: #0a0a0a; color: #e8e6e1;
+      font-family: Georgia, "Iowan Old Style", Cambria, serif;
+    }
+    .canvas {
+      box-sizing: border-box;
+      padding: 64px;
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+    }
+    .zone { overflow: hidden; }
+    .brand {
+      font-family: ui-monospace, "JetBrains Mono", monospace;
+      color: #d4a574;
+      font-size: 22px;
+    }
+    /* z-headline: tall hero zone, autoFit will shrink to fit */
+    .z-headline {
+      flex: 1;
+      display: flex; align-items: center;
+      max-height: 800px;
+    }
+    .z-headline [data-fit="auto"] {
+      font-size: 96px;
+      line-height: 1.1;
+      font-weight: 600;
+      width: 100%;
+    }
+    /* z-deck: smaller secondary zone */
+    .z-deck {
+      max-height: 200px;
+      margin-top: 32px;
+    }
+    .z-deck [data-fit="auto"] {
+      font-size: 32px;
+      line-height: 1.4;
+      color: #8a8780;
+    }
+    .url {
+      font-family: ui-monospace, monospace;
+      color: #d4a574;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="brand">// solo_lab</div>
+
+    <div class="zone z-headline">
+      <div data-fit="auto" data-min-fs="36" data-step-fs="2">{{headline}}</div>
+    </div>
+
+    <div class="zone z-deck">
+      <div data-fit="auto" data-min-fs="18" data-step-fs="1">{{deck}}</div>
+    </div>
+
+    <div class="url">solo-lab.dev</div>
+  </div>
+</body>
+</html>

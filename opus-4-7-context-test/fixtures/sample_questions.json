@@ -1,0 +1,79 @@
+{
+  "_schema": "Same as questions.json. Each question has: id, category (needle/multihop/refactor), prompt, canonical_answer, scorer_keywords (must appear, case-insensitive), forbidden_keywords (model must NOT mention — confabulation tells). 9 questions total: 3 needle + 3 multihop + 3 refactor. Written against fixtures/sample_repo/.",
+  "questions": [
+    {
+      "id": "n01",
+      "category": "needle",
+      "prompt": "What exact string value is assigned to DEFAULT_VOICE_ID in voice_lib.py?",
+      "canonical_answer": "v_marvin_42",
+      "scorer_keywords": ["v_marvin_42"],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "n02",
+      "category": "needle",
+      "prompt": "What is the numeric value of ZOOM_END in video_lib.py?",
+      "canonical_answer": "1.080",
+      "scorer_keywords": ["1.08"],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "n03",
+      "category": "needle",
+      "prompt": "What is the exact string value of EXPRESSIVE_MODEL in voice_lib.py?",
+      "canonical_answer": "tts_v3_expressive",
+      "scorer_keywords": ["tts_v3_expressive"],
+      "forbidden_keywords": []
+    },
+
+    {
+      "id": "m01",
+      "category": "multihop",
+      "prompt": "When pipeline.daily_publish() runs, list the modules called in order, by function name, to produce the final reel MP4.",
+      "canonical_answer": "voice_lib.synthesize -> subtitle_lib.transcribe -> subtitle_lib.to_ass_word_pop -> video_lib.compose_reel",
+      "scorer_keywords": ["voice_lib", "subtitle_lib", "video_lib", "compose_reel"],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "m02",
+      "category": "multihop",
+      "prompt": "video_lib.compose_reel orchestrates an ffmpeg chain. Does it pre-scale the source image before applying zoompan, and at what factor?",
+      "canonical_answer": "Yes; pre-scales by 4× before zoompan to avoid aliasing.",
+      "scorer_keywords": ["pre-scale", "4"],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "m03",
+      "category": "multihop",
+      "prompt": "subtitle_lib uses ASS karaoke for word-pop subtitles. Which ASS tag drives the per-word colour sweep, and what units does it take?",
+      "canonical_answer": "\\kf with centiseconds per word",
+      "scorer_keywords": ["kf", "centisecond"],
+      "forbidden_keywords": []
+    },
+
+    {
+      "id": "r01",
+      "category": "refactor",
+      "prompt": "If we deleted voice_lib.py from the repo, list every other module that would break (directly or indirectly) and what each would need.",
+      "canonical_answer": "pipeline.py imports synthesize and estimate_duration_seconds from voice_lib — it would need a replacement TTS module or removal of the audio-synthesis step. No other module imports voice_lib directly.",
+      "scorer_keywords": ["pipeline.py", "synthesize"],
+      "forbidden_keywords": ["video_lib imports voice_lib", "subtitle_lib imports voice_lib"]
+    },
+    {
+      "id": "r02",
+      "category": "refactor",
+      "prompt": "subtitle_lib was rewritten from one Dialogue per word to a single Dialogue per window with \\kf timing. If we reverted to one Dialogue per word, what visual regression would we see in the rendered reel?",
+      "canonical_answer": "The 'staircase-of-boxes' regression: each per-word Dialogue draws its own bg-box, producing multiple stacked rectangles instead of one continuous black bar that the colour sweeps across.",
+      "scorer_keywords": ["box", "staircase"],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "r03",
+      "category": "refactor",
+      "prompt": "If we wanted to bump CANVAS_WIDTH in video_lib.py from 1080 to 1440 (wider format), list the constants and parts of compose_reel that would need to be reviewed because of this change.",
+      "canonical_answer": "BRAND_FONT_SIZE (relative scale), BRAND_MARGIN_PX, SUB_FONT_SIZE / SUB_MARGIN_VERTICAL_PX (relative geometry), the zoompan ffmpeg filter (uses canvas dims), and any image pre-scale factor that depends on canvas width.",
+      "scorer_keywords": ["BRAND", "SUB", "zoom"],
+      "forbidden_keywords": []
+    }
+  ]
+}

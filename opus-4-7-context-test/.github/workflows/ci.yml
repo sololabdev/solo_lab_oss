@@ -1,0 +1,35 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile-check
+        run: python -m py_compile src/*.py
+      - name: sample_questions.json schema
+        run: |
+          python - <<'PY'
+          import json
+          d = json.load(open('fixtures/sample_questions.json'))
+          qs = d['questions']
+          assert len(qs) >= 9, f"expected >=9 questions, got {len(qs)}"
+          for q in qs:
+            for k in ('id','category','prompt','canonical_answer','scorer_keywords'):
+              assert k in q, f"{q.get('id')} missing {k}"
+            assert q['category'] in ('needle','multihop','refactor')
+          print("schema OK", len(qs), "questions")
+          PY
+      - name: Install
+        run: pip install -r requirements.txt
+      - name: Build context loads (offline, fixture corpus)
+        run: cd src && python context_loader.py --offline --targets 50000
+      - name: Dry-run benchmark
+        run: cd src && python benchmark_opus_47.py --dry-run --sizes 50000
