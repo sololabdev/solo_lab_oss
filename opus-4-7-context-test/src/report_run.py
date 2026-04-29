@@ -31,7 +31,7 @@ def main() -> None:
     if not scored.exists():
         sys.exit(f"Run scoring first: python score_run.py {args.run_id}")
 
-    records = [json.loads(l) for l in scored.read_text().splitlines() if l.strip()]
+    records = [json.loads(line) for line in scored.read_text().splitlines() if line.strip()]
 
     # Aggregate: (size, category) -> {correct, partial, wrong, hallucinated, error, total, cost_sum, n_cost}
     agg: dict[tuple[int, str], dict] = defaultdict(

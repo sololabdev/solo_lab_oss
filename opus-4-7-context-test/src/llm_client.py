@@ -195,7 +195,7 @@ class OpenRouterBackend:
             output_tokens=int(usage.get("completion_tokens") or 0),
             cache_creation_input_tokens=0,  # OR doesn't expose cache shape
             cache_read_input_tokens=0,
-            cost_usd=float(usage.get("cost") or 0.0),
+            cost_usd=float(usage.get("cost") or usage.get("total_cost") or 0.0),
             elapsed_s=elapsed,
             backend=self.name,
         )

@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "structural-judge"
+version = "0.1.0"
+description = "Deterministic Playwright-based structural judge for editorial layouts."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "Solo Lab" }]
+dependencies = ["playwright>=1.44,<2"]
+
+[project.urls]
+Homepage = "https://github.com/sololabdev/solo_lab_oss"
+Source = "https://github.com/sololabdev/solo_lab_oss/tree/main/structural-judge"
+
+[tool.setuptools]
+package-dir = { structural_judge = "src" }
+packages = ["structural_judge"]

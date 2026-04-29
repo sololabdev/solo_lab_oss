@@ -1,7 +1,8 @@
 """Deterministic structural judge — uses Playwright to extract element bounding boxes,
 detects overflow/overlap WITHOUT LLM. Faster + free + more reliable for layout.
 
-Returns same JSON shape as judge.py so pipeline.py can use either."""
+Returns the same JSON shape as any compatible judge so callers can swap
+implementations behind a single interface."""
 from __future__ import annotations
 import asyncio, json, sys, pathlib, re
 from playwright.async_api import async_playwright
@@ -302,14 +303,18 @@ async def judge_async(html: str, brief: str, template_name: str,
 def judge(png_path: str, brief: str, template_name: str,
           width: int = 1080, height: int = 1080,
           html: str | None = None) -> dict:
-    """Synchronous wrapper. Pipeline passes html directly via attribute hack OR png path
-    (in which case we recover html from sister file)."""
+    """Synchronous wrapper. Two call modes:
+
+    - Pass html directly (preferred) — png_path is unused but kept for
+      back-compat with callers that use it for filename hints.
+    - Pass only png_path — html is recovered from the sister .html file
+      next to the PNG (e.g. iter_N.png alongside iter_N.html).
+    """
     if html is None:
-        # Pipeline writes iter_N.html alongside iter_N.png — recover
         html_path = pathlib.Path(png_path).with_suffix(".html")
         if not html_path.exists():
             raise ValueError(f"Need either html arg or sister file {html_path}")
-        html = html_path.read_text()
+        html = html_path.read_text(encoding="utf-8")
     return asyncio.run(judge_async(html, brief, template_name, width, height))
 
 

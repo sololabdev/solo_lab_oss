@@ -175,7 +175,7 @@ if __name__ == "__main__":
     if len(sys.argv) < 3:
         print("usage: zone_renderer.py <html> <out_png> [w] [h]", file=sys.stderr)
         sys.exit(1)
-    html_text = Path(sys.argv[1]).read_text()
+    html_text = Path(sys.argv[1]).read_text(encoding="utf-8")
     out = sys.argv[2]
     w = int(sys.argv[3]) if len(sys.argv) > 3 else 1080
     h = int(sys.argv[4]) if len(sys.argv) > 4 else 1080

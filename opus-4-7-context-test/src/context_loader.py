@@ -32,7 +32,7 @@ DEPS_DIR.mkdir(exist_ok=True)
 def read_file(path: Path) -> str:
     try:
         return path.read_text(encoding="utf-8", errors="replace")
-    except Exception:
+    except (OSError, UnicodeDecodeError):
         return ""
 
 

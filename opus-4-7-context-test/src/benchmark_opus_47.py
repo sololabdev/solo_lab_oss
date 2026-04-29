@@ -9,9 +9,9 @@ Saves `multihop` and `refactor` results with their canonical answers
 attached for manual scoring (the HN post commits to manual scoring).
 
 Requires:
-  Either ANTHROPIC_API_KEY (with balance) or the OpenRouter key file at
-  ~/.openclaw/credentials/openrouter-api-key.txt
-  benchmark/cache/load_{150000,500000,700000}.txt   (build via context_loader.py)
+  Either ANTHROPIC_API_KEY (with balance) or an OpenRouter key reachable
+  via OPENROUTER_API_KEY env var (or OPENROUTER_KEY_FILE pointing at a file).
+  src/cache/load_{150000,500000,700000}.txt   (build via context_loader.py)
 
 Usage:
   python benchmark_opus_47.py                       # full run, all 3 sizes
@@ -26,7 +26,7 @@ import json
 import os
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -64,7 +64,7 @@ def cost_usd(usage) -> float:
 
 
 def call_with_retry(backend, system_blocks, q_prompt):
-    last_err = None
+    last_err: Exception | None = None
     for attempt in range(len(RETRY_SLEEP) + 1):
         try:
             return backend.call(MODEL, system_blocks, q_prompt, MAX_TOKENS_OUT)
@@ -77,7 +77,9 @@ def call_with_retry(backend, system_blocks, q_prompt):
                 time.sleep(RETRY_SLEEP[attempt])
             else:
                 raise
-    raise last_err  # unreachable
+    if last_err:
+        raise last_err
+    raise RuntimeError("call_with_retry exited without invoking backend.call")
 
 
 def auto_score_needle(answer_text: str, q: dict) -> str:
@@ -139,7 +141,8 @@ def main() -> None:
         questions = [q for q in questions if q["category"] == args.filter_category]
     if args.limit:
         questions = questions[: args.limit]
-    print(f"Questions: {len(questions)} ({', '.join(args.filter_category and [args.filter_category] or ['all categories'])})")
+    cats_label = [args.filter_category] if args.filter_category else ["all categories"]
+    print(f"Questions: {len(questions)} ({', '.join(cats_label)})")
 
     # Pre-load contexts (and verify they exist)
     contexts = {sz: load_context(sz) for sz in args.sizes}
@@ -158,7 +161,7 @@ def main() -> None:
              if backend.name == "openrouter" else ""))
 
     # Output dir for this run
-    stamp = datetime.utcnow().strftime("%Y-%m-%d_%H%M%S")
+    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H%M%S")
     out_dir = RUNS_DIR / stamp
     out_dir.mkdir(parents=True, exist_ok=True)
     results_path = out_dir / "results.jsonl"

@@ -18,7 +18,8 @@ jobs:
         run: |
           python - <<'PY'
           import json
-          d = json.load(open('fixtures/sample_questions.json'))
+          with open('fixtures/sample_questions.json', encoding='utf-8') as f:
+              d = json.load(f)
           qs = d['questions']
           assert len(qs) >= 9, f"expected >=9 questions, got {len(qs)}"
           for q in qs:
@@ -33,3 +34,5 @@ jobs:
         run: cd src && python context_loader.py --offline --targets 50000
       - name: Dry-run benchmark
         run: cd src && python benchmark_opus_47.py --dry-run --sizes 50000
+      - name: Unit tests
+        run: python -m pytest tests/ -q

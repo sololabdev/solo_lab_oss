@@ -39,10 +39,12 @@ def main() -> None:
     print(f"size: {result['size_bytes']:,} bytes")
     print(f"fitted font sizes: {result['fitted_sizes']}")
     if result.get("clipped"):
-        print(f"WARN: {len(result['clipped'])} zone(s) still clipped after autoFit:")
+        print(f"WARN: {len(result['clipped'])} zone(s) still clipped after autoFit:",
+              file=sys.stderr)
         for c in result["clipped"]:
             print(f"  - {c['zone']}: '{c['text']}…' "
-                  f"(overshoot h={c['overshoot_h']}px w={c['overshoot_w']}px)")
+                  f"(overshoot h={c['overshoot_h']}px w={c['overshoot_w']}px)",
+                  file=sys.stderr)
 
 
 if __name__ == "__main__":
