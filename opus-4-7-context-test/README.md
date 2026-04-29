@@ -62,7 +62,7 @@ A `summary.json` per run rolls up totals + needle auto-score counts.
   `--targets`.
 - 90–150 model calls per full run. Cost ≈ $5–10 with Anthropic prompt
   caching, or ≈ $25–30 without (e.g. via OpenRouter). The Solo Lab
-  reference run was $0 — routed through Cloud Code subagents.
+  reference run was $0 — routed through Claude Code subagents.
 - Auto-scores `needle` answers via canonical-keyword match. Scoring of
   `multihop` and `refactor` is manual — by design, no LLM-as-judge.
 
