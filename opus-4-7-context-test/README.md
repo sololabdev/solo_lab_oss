@@ -33,10 +33,6 @@ Your numbers will differ. The harness ships a small bundled fixture so
 the first run produces meaningful output without any setup. Substitute
 your own files (and your own questions) for a real test.
 
-Real numbers depend on your codebase. The harness ships a small bundled
-fixture so the first run produces meaningful output without any setup.
-Substitute your own files (and your own questions) for a real test.
-
 ## Quick start (uses bundled fixture)
 
 ```bash
