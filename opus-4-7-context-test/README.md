@@ -4,25 +4,34 @@ A reproducible harness for testing where Anthropic Claude Opus 4.7's
 effective context length actually ends — on **your** codebase, not a
 synthetic needle-in-haystack benchmark.
 
-Backs the long-form post **["I gave Opus 4.7 a 700K-token codebase. Here's
-where it broke."](https://solo-lab.dev/posts/opus-4-7-context-cliff)**
+Backs the long-form post **["I expected Opus 4.7 to fall off a cliff at
+1M tokens. It didn't."](https://solo-lab.dev/posts/opus-4-7-context-cliff)**
 
 ## What this measures
 
 - 30 hand-built questions in 3 categories: needle (single-fact lookup),
   multi-hop (trace data flow across modules), refactor (synthesis: "if
   we deprecate X, what breaks?").
-- Each question asked at 3 context loads: 150K, 500K, 700K input tokens.
-- 90 model calls total. Cost ≈ $5–10 with Anthropic prompt caching, or
-  ≈ $25–30 without (e.g. via OpenRouter).
+- Each question asked at up to 5 context loads: 150K, 500K, 700K, 900K, 1M
+  input tokens. The bundled fixture ships configurable targets via
+  `--targets`.
+- 90–150 model calls per full run. Cost ≈ $5–10 with Anthropic prompt
+  caching, or ≈ $25–30 without (e.g. via OpenRouter). The Solo Lab
+  reference run was $0 — routed through Cloud Code subagents.
 - Auto-scores `needle` answers via canonical-keyword match. Scoring of
   `multihop` and `refactor` is manual — by design, no LLM-as-judge.
 
-## What this finds (hypothesis, before you run it)
+## What this measured for Solo Lab (one run, one codebase)
 
-> The single-builder hypothesis I'm testing: **1M is a marketing number,
-> ~500K is the practical ceiling for code-grade reasoning, and dumping
-> the full context past that line is a 2–7× paid downgrade.**
+> Going in I expected the standard "1M is marketing, ~500K is the real
+> ceiling" curve. **The data didn't cooperate.** Across 30 Q × 5 sizes:
+> needle retrieval flat at 100%, multi-hop 90–95%, refactor (manual
+> review) 95% — at every size including 1M. No cliff.
+> Full numbers in the linked post.
+
+Your numbers will differ. The harness ships a small bundled fixture so
+the first run produces meaningful output without any setup. Substitute
+your own files (and your own questions) for a real test.
 
 Real numbers depend on your codebase. The harness ships a small bundled
 fixture so the first run produces meaningful output without any setup.
