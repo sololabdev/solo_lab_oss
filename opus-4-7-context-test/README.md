@@ -1,11 +1,56 @@
 # opus-4-7-context-test
 
+![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+![Python](https://img.shields.io/badge/python-3.10%2B-blue)
+![Tests](https://img.shields.io/badge/tests-7%20passing-green)
+![Status](https://img.shields.io/badge/status-active-green)
+
 A reproducible harness for testing where Anthropic Claude Opus 4.7's
 effective context length actually ends — on **your** codebase, not a
 synthetic needle-in-haystack benchmark.
 
 Backs the long-form post **["I expected Opus 4.7 to fall off a cliff at
 1M tokens. It didn't."](https://solo-lab.dev/posts/opus-4-7-context-cliff)**
+
+## Reproduce in 60 seconds
+
+```bash
+git clone https://github.com/sololabdev/solo_lab_oss
+cd solo_lab_oss/opus-4-7-context-test
+pip install -r requirements.txt
+export OPENROUTER_API_KEY=sk-or-v1-...
+cd src && python context_loader.py --offline   # build fixture, ~10s
+python benchmark_opus_47.py --backend openrouter \
+    --sizes 150000 --filter-category needle --limit 1   # 1 call, ~$0.05
+```
+
+First successful run takes ~60 seconds and produces a single
+needle-retrieval answer. Full benchmark (150 calls × 5 sizes) is ~$25
+on OpenRouter.
+
+## What you get out
+
+Each call appends one JSON line to `runs/<stamp>/results.jsonl`:
+
+```json
+{
+  "context_size": 150000,
+  "question_id": "n01",
+  "category": "needle",
+  "prompt": "What port does the gateway bind to in production?",
+  "canonical_answer": "18789",
+  "answer": "The gateway binds to port 18789 in production (see config/server.py:42).",
+  "input_tokens": 149832,
+  "output_tokens": 24,
+  "cache_read_input_tokens": 149832,
+  "cost_usd": 0.0021,
+  "elapsed_s": 3.4,
+  "auto_score": "correct"
+}
+```
+
+A `summary.json` per run rolls up totals + needle auto-score counts.
+`report_run.py` turns a scored run into the HN-ready markdown table.
 
 ## What this measures
 
@@ -33,40 +78,21 @@ Your numbers will differ. The harness ships a small bundled fixture so
 the first run produces meaningful output without any setup. Substitute
 your own files (and your own questions) for a real test.
 
-## Quick start (uses bundled fixture)
+## Full run, scoring, and report
+
+Once the 60-second smoke test works, the rest of the harness is three
+commands. Use `ANTHROPIC_API_KEY=sk-ant-...` instead of OpenRouter to
+get prompt-caching discounts (~$8 vs ~$25 for a full run).
 
 ```bash
-git clone https://github.com/sololabdev/solo_lab_oss
-cd solo_lab_oss/opus-4-7-context-test
-
-pip install -r requirements.txt
-
-# Either:
-export ANTHROPIC_API_KEY=sk-ant-...        # direct, with prompt caching
-# or:
-export OPENROUTER_API_KEY=sk-or-v1-...     # fallback, no caching discount
-
-# 1. Build context loads from the bundled fixture (~10 s, free)
-cd src
-python context_loader.py --offline
-
-# 2. Validate setup (no API calls)
-python benchmark_opus_47.py --dry-run
-
-# 3. Smoke-test on 1 needle question at 150K
-python benchmark_opus_47.py --backend openrouter \
-                            --sizes 150000 \
-                            --filter-category needle \
-                            --limit 1
-
-# 4. Full run (~25–40 min wall time, ~$25 on OpenRouter / ~$8 on Anthropic-direct)
+# Full run (~25–40 min wall time, ~$25 on OpenRouter / ~$8 on Anthropic-direct)
 python benchmark_opus_47.py
 
-# 5. Score the run
-python score_run.py <run_id>             # interactive (multi-hop / refactor manual)
-python score_run.py <run_id> --auto-only # auto-score needle only (fast preview)
+# Score: auto for needle, interactive for multi-hop / refactor
+python score_run.py <run_id>
+python score_run.py <run_id> --auto-only   # fast preview, needle only
 
-# 6. Generate the HN-ready table
+# HN-ready summary table
 python report_run.py <run_id>
 ```
 
