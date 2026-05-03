@@ -1,0 +1,360 @@
+{
+  "_schema": "Anonymized 30-question benchmark + 10 representative samples. Module names mapped to module_a..module_k; identifying constants, project names, and personal handles replaced. Same schema as questions.json. The full 30 are in 'questions'; the 10 marked '_representative_samples' is the audit-recommended public subset.",
+  "_anonymization_note": "Names changed for the public release; the original codebase module structure is private. The harness logic (scorer_keywords, forbidden_keywords, question shapes) is identical to the real run.",
+  "_module_map_note": "Original-module-name mapping is intentionally not published; readers can re-run the harness against their own codebase to compare numbers.",
+  "questions": [
+    {
+      "id": "n01",
+      "category": "needle",
+      "prompt": "What is the value of CONST_ID_1 assigned in module_a.py? Answer with just the value.",
+      "canonical_answer": "O88Glmkh2nWihrGwNsFd",
+      "scorer_keywords": [
+        "O88Glmkh2nWihrGwNsFd"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "n02",
+      "category": "needle",
+      "prompt": "What is the value of CONST_TIMING_1 in module_b.py? Answer with just the number.",
+      "canonical_answer": "1.080",
+      "scorer_keywords": [
+        "1.08"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "n03",
+      "category": "needle",
+      "prompt": "What is the value of EXPRESSIVE_MODEL in module_a.py?",
+      "canonical_answer": "eleven_v3",
+      "scorer_keywords": [
+        "eleven_v3"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "n04",
+      "category": "needle",
+      "prompt": "What is the value of DEFAULT_MODEL in module_a.py?",
+      "canonical_answer": "eleven_multilingual_v2",
+      "scorer_keywords": [
+        "eleven_multilingual_v2"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "n05",
+      "category": "needle",
+      "prompt": "What is the value of CHARS_PER_SEC in module_a.py?",
+      "canonical_answer": "14",
+      "scorer_keywords": [
+        "14"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "n06",
+      "category": "needle",
+      "prompt": "What is the exact string value of CAPTION_TEXT in module_b.py?",
+      "canonical_answer": "@channel_x · example.dev",
+      "scorer_keywords": [
+        "@channel_x",
+        "example.dev"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "n07",
+      "category": "needle",
+      "prompt": "What is the canvas size (CANVAS_W x CANVAS_H) defined in module_b.py? Give both values.",
+      "canonical_answer": "1080 x 1920",
+      "scorer_keywords": [
+        "1080",
+        "1920"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "n08",
+      "category": "needle",
+      "prompt": "What is the value of OPENER_FADE in module_b.py?",
+      "canonical_answer": "0.6",
+      "scorer_keywords": [
+        "0.6"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "n09",
+      "category": "needle",
+      "prompt": "What is the exact string value of STICKER_TEXT in module_b.py?",
+      "canonical_answer": "// project_x",
+      "scorer_keywords": [
+        "// project_x"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "n10",
+      "category": "needle",
+      "prompt": "What is the value of FPS in module_b.py?",
+      "canonical_answer": "30",
+      "scorer_keywords": [
+        "30"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "m01",
+      "category": "multihop",
+      "prompt": "Trace the data flow when module_c.py is invoked: which modules does it call (directly), and in what order, to produce the final subtitled MP4? List each module name in order.",
+      "canonical_answer": "module_b (module_l) -> subtitle_generator (transcribe) -> subtitle_brand_normalizer (normalize_words) -> module_g (to_ass_word_pop) -> subtitle_generator (burn_subs)",
+      "scorer_keywords": [
+        "module_b",
+        "subtitle_generator",
+        "subtitle_brand_normalizer",
+        "module_g"
+      ],
+      "forbidden_keywords": [
+        "module_e",
+        "module_n"
+      ]
+    },
+    {
+      "id": "m02",
+      "category": "multihop",
+      "prompt": "When module_a.py runs in expressive mode, which model identifier is sent to the ElevenLabs API and what is the API base URL?",
+      "canonical_answer": "eleven_v3 sent to https://api.elevenlabs.io",
+      "scorer_keywords": [
+        "eleven_v3",
+        "api.elevenlabs.io"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "m03",
+      "category": "multihop",
+      "prompt": "Which file does module_b.py expect to find subtitle font and caption strip styling configured at? Name the file path of FONT_PATH.",
+      "canonical_answer": "/home/user_x/project_y/fonts/BrandFontMono-Medium.ttf",
+      "scorer_keywords": [
+        "BrandFontMono",
+        "Medium.ttf"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "m04",
+      "category": "multihop",
+      "prompt": "In module_d.py, list the named placeholders used to stash content from being mangled by other normalisation rules. (Format: text exactly as appears in code.)",
+      "canonical_answer": "§§BRK{i}§§ for <break/> tags, §§ATG{i}§§ for [audio tags]",
+      "scorer_keywords": [
+        "§§BRK",
+        "§§ATG"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "m05",
+      "category": "multihop",
+      "prompt": "What is the relationship between module_e.py and module_f.py? Be precise: who imports whom, and what function is imported?",
+      "canonical_answer": "module_f.py imports `heal` from module_e (line: from module_e import heal)",
+      "scorer_keywords": [
+        "module_f.py",
+        "from module_e import heal",
+        "heal"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "m06",
+      "category": "multihop",
+      "prompt": "module_g.py emits ASS subtitles. What ASS karaoke tag is used to drive the per-word color sweep, and what units does it take?",
+      "canonical_answer": "\\kf with centiseconds per word",
+      "scorer_keywords": [
+        "kf",
+        "centisecond"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "m07",
+      "category": "multihop",
+      "prompt": "In module_b.py, between ZOOM_START and CONST_TIMING_1, what is the zoom anchor point (X, Y) and is it centred?",
+      "canonical_answer": "X=0.45, Y=0.42 — off-centre, slightly upper-left of geometric centre",
+      "scorer_keywords": [
+        "0.45",
+        "0.42"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "m08",
+      "category": "multihop",
+      "prompt": "module_h.py resolves voice scripts. What is its fallback chain: which directory does it check first, and what does it fall back to if the file is missing?",
+      "canonical_answer": "Checks voice_scripts/ first, falls back to captions/",
+      "scorer_keywords": [
+        "voice_scripts",
+        "captions"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "m09",
+      "category": "multihop",
+      "prompt": "module_c.py exposes a function `compose_one(name, force_transcribe=...)`. List the side-effect output files it produces (by location/extension). Be specific.",
+      "canonical_answer": "video file (mp4, base reel), audio (already exists), ASS subtitle file (cached in subtitles/), final subtitled mp4 in video_subbed/",
+      "scorer_keywords": [
+        "video_subbed",
+        ".ass",
+        ".mp4"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "m10",
+      "category": "multihop",
+      "prompt": "What is the canvas background colour set in module_b.py for the dark-canvas reel format, expressed as a hex string?",
+      "canonical_answer": "#0a0a0a",
+      "scorer_keywords": [
+        "#0a0a0a",
+        "0a0a0a"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "r01",
+      "category": "refactor",
+      "prompt": "module_e.py is being deprecated. List every other module in this codebase that imports from module_e (directly or indirectly), and for each, describe what changes would be needed if module_e.py were removed.",
+      "canonical_answer": "module_f.py — imports `heal` directly. Would need either a stub heal() function or removal of the heal-loop step in module_f.py. No other direct importers exist in the repo.",
+      "scorer_keywords": [
+        "module_f.py",
+        "heal"
+      ],
+      "forbidden_keywords": [
+        "module_i.py imports module_e",
+        "module_n imports module_e",
+        "module_a imports module_e"
+      ]
+    },
+    {
+      "id": "r02",
+      "category": "refactor",
+      "prompt": "If we wanted to bump CANVAS_W from 1080 to 1440 in module_b.py to support a wider format, list every other constant or piece of logic in module_b.py that would need to be reviewed because of this change. Be exhaustive.",
+      "canonical_answer": "BORDER_PX (relative scale), HOOK_FONT_SIZE (would look small), STICKER_FS (relative scale), STICKER_MARGIN, CAPTION_H/CAPTION_FS, ZOOM zoompan filter chain (uses canvas dims), the PNG width % calculation (currently 92% of canvas), subtitle band height reservation",
+      "scorer_keywords": [
+        "BORDER_PX",
+        "HOOK_FONT_SIZE",
+        "STICKER",
+        "PNG",
+        "subtitle"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "r03",
+      "category": "refactor",
+      "prompt": "We want to swap ElevenLabs eleven_v3 for a different TTS provider. Which files in this repo would need to change? List file names and the kind of change needed in each.",
+      "canonical_answer": "module_a.py — primary swap (API_BASE, model IDs, request format, settings dict). module_h.py and module_d.py likely UNCHANGED (provider-agnostic preprocessing). Possibly module_j.py / module_f.py callers if they specify model name.",
+      "scorer_keywords": [
+        "module_a.py"
+      ],
+      "forbidden_keywords": [
+        "module_b.py would need",
+        "module_g.py would need"
+      ]
+    },
+    {
+      "id": "r04",
+      "category": "refactor",
+      "prompt": "module_d.py uses placeholder strings to protect content. If we wanted to change the placeholder format from `§§BRK{i}§§` to `<<BRK_i>>`, what other parts of module_d.py would need to update simultaneously? Be specific about the regex patterns.",
+      "canonical_answer": "Both the stash regex (which writes the placeholder) and the restore regex (which detects it and substitutes back) — they MUST be changed atomically or restoration will fail. Also the same applies to §§ATG{i}§§ for audio tags.",
+      "scorer_keywords": [
+        "stash",
+        "restore",
+        "regex"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "r05",
+      "category": "refactor",
+      "prompt": "module_g.py was rewritten to use a single Dialogue line per window with \\kf timing instead of per-word Dialogue events. If we needed to revert to per-word Dialogue (one Dialogue per word), what visual regression would we expect to reintroduce? Be specific.",
+      "canonical_answer": "The 'staircase boxes' regression: each per-word Dialogue draws its own bg-box (BorderStyle=3), creating multiple stacked rectangles instead of one continuous black bar. The single-Dialogue-with-\\kf format produces one box that the colour sweeps across.",
+      "scorer_keywords": [
+        "box",
+        "staircase",
+        "BorderStyle"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "r06",
+      "category": "refactor",
+      "prompt": "module_c.py has caching for ASS files. If we changed the ASS generation algorithm in module_g.py, what step in module_c.py needs to be aware of it to avoid serving stale subs?",
+      "canonical_answer": "The cache lookup that decides whether to skip transcription/ASS generation. Either the cache key needs to include a version of the algorithm, or the user must run with force_transcribe=True / clear the cached ASS file.",
+      "scorer_keywords": [
+        "force_transcribe",
+        "cache"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "r07",
+      "category": "refactor",
+      "prompt": "module_b.py uses a two-stage filter module_f (stage A pre-scale, stage B fade+composite). If we wanted to add a third stage for a colour-grade LUT, where in the existing module_f would it slot in, and what filter would you use?",
+      "canonical_answer": "Insert between stage A (pre-scale 4x) and stage B (zoompan + fade + composite). Use ffmpeg's `lut3d` filter with the .cube file. Must run BEFORE composition because LUT applies to source PNG, not the final canvas.",
+      "scorer_keywords": [
+        "lut3d",
+        "stage",
+        "PNG"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "r08",
+      "category": "refactor",
+      "prompt": "If we wanted to A/B test two different STICKER_TEXT brand strings, what's the minimum-change approach in module_b.py?",
+      "canonical_answer": "Either parametrise STICKER_TEXT as a function argument to module_l (currently a module-level constant), or read it from an env var / config file. Module-level constant means current callers need no API change but A/B testing requires monkeypatching or two import paths.",
+      "scorer_keywords": [
+        "STICKER_TEXT",
+        "module_l"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "r09",
+      "category": "refactor",
+      "prompt": "module_k.py is the retrieval layer. If we deleted module_k.py and dumped the full repo into context for every query, which other modules would need to change? List them.",
+      "canonical_answer": "Any caller that imported module_k functions for chunk retrieval. Based on this repo, module_k.py appears largely standalone (no other module currently imports it heavily for production paths) — deletion would be local; the cost would be paid at query time (more tokens, worse multi-hop accuracy past 500K).",
+      "scorer_keywords": [
+        "module_k"
+      ],
+      "forbidden_keywords": []
+    },
+    {
+      "id": "r10",
+      "category": "refactor",
+      "prompt": "We want to add a hard fail when the input prompt + context exceeds 500K tokens. Where in the codebase would you put this check, and why there?",
+      "canonical_answer": "Wherever the Anthropic client is wrapped — likely a thin client/wrapper module. If there is no such wrapper, the right move is to introduce one. Putting the check at the call site of every model call duplicates logic; centralising is the point of having a wrapper.",
+      "scorer_keywords": [
+        "wrapper",
+        "client",
+        "500"
+      ],
+      "forbidden_keywords": []
+    }
+  ],
+  "_representative_samples": [
+    "n01",
+    "n02",
+    "n03",
+    "n04",
+    "m01",
+    "m02",
+    "m03",
+    "r01",
+    "r02",
+    "r03"
+  ]
+}
