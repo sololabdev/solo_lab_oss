@@ -1,0 +1,58 @@
+name: "Solo Lab PR Review Bot"
+description: "Brand-voice + tabu-word review on every pull request. Code-review pass coming v2."
+author: "Solo Lab"
+branding:
+  icon: "git-pull-request"
+  color: "yellow"
+
+inputs:
+  solo-lab-api-key:
+    description: >-
+      Solo Lab API key. Optional. Without one you get the free tier
+      (10 reviews/day per repository). Get a key at
+      https://solo-lab.dev/pro for the Pro tier (unlimited).
+    required: false
+    default: ""
+  review-style:
+    description: >-
+      What to review: "voice" (brand-voice + tabu-word lint),
+      "code" (code-review pass — coming in v2, currently a no-op),
+      or "both". Default "voice".
+    required: false
+    default: "voice"
+  comment-mode:
+    description: >-
+      How to surface findings: "summary" posts one consolidated
+      review comment, "inline" posts one comment per finding.
+      Default "summary".
+    required: false
+    default: "summary"
+  api-endpoint:
+    description: >-
+      Override the API endpoint. Default talks to solo-lab.dev.
+      Pin to your own deployment for self-hosted reviews.
+    required: false
+    default: "https://solo-lab.dev/api/pr-review"
+  fail-on-findings:
+    description: >-
+      "true" to fail the workflow when the bot reports findings,
+      "false" to always succeed (review is informational only).
+      Default "false" — keeps the bot non-blocking by default.
+    required: false
+    default: "false"
+
+outputs:
+  finding-count:
+    description: "Number of findings the bot reported."
+  review-url:
+    description: "URL of the posted review comment, when GITHUB_TOKEN had write access."
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  env:
+    INPUT_SOLO_LAB_API_KEY: ${{ inputs.solo-lab-api-key }}
+    INPUT_REVIEW_STYLE: ${{ inputs.review-style }}
+    INPUT_COMMENT_MODE: ${{ inputs.comment-mode }}
+    INPUT_API_ENDPOINT: ${{ inputs.api-endpoint }}
+    INPUT_FAIL_ON_FINDINGS: ${{ inputs.fail-on-findings }}

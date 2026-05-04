@@ -1,0 +1,42 @@
+# CI for pr-review-bot itself.
+#
+# Runs the action's static checks on every push to the package:
+#   - YAML validation (action.yml, examples/workflow.yml)
+#   - bash -n on entrypoint.sh + tests/smoke.sh
+#   - pytest on tests/test_action_yaml.py
+#
+# Lives in the package directory (pr-review-bot/.github/workflows/ci.yml)
+# so it travels with the action when extracted into its own repo for
+# Marketplace publishing.
+name: pr-review-bot CI
+
+on:
+  push:
+    paths:
+      - "pr-review-bot/**"
+  pull_request:
+    paths:
+      - "pr-review-bot/**"
+
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pr-review-bot
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pyyaml pytest
+      - name: bash syntax
+        run: |
+          bash -n entrypoint.sh
+          bash -n tests/smoke.sh
+      - name: shellcheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: pr-review-bot
+      - name: yaml + structure tests
+        run: pytest tests/test_action_yaml.py -v
