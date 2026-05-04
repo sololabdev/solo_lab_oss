@@ -8,3 +8,15 @@ __pycache__/
 **/cache/
 **/deps/
 **/examples/output/
+
+# Secrets / credentials (added 2026-05-04 audit)
+.env
+.env.*
+!.env.example
+secrets/
+secrets.env
+credentials/
+*.key
+*.pem
+*.p12
+*.pfx
