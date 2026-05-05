@@ -11,13 +11,14 @@ a $50–150/mo SaaS or filling a niche where no good open thing existed.
 
 ---
 
-## Four projects in one repo
+## Five projects in one repo
 
 | Project | What it does | License |
 |---|---|---|
 | **[`zone-renderer/`](./zone-renderer)** | HTML template + zones dict → 1080×1350 PNG via Playwright + autoFit JS. Replaces Bannerbear/Placid ($49–99/mo). | MIT |
 | **[`structural-judge/`](./structural-judge)** | DOM-based layout quality judge. Catches text overflow + overlap. Replaces an LLM-vision judge that cost me $150 in 9 days. | MIT |
 | **[`opus-4-7-context-test/`](./opus-4-7-context-test)** | Reproducible benchmark for Anthropic Claude Opus 4.7's effective context length. 30 questions × 3 sizes. Backs [solo-lab.dev/posts/opus-4-7-context-cliff](https://solo-lab.dev/posts/opus-4-7-context-cliff). | MIT |
+| **[`cache-lab/`](./cache-lab)** | Stdlib-only benchmark of real prompt-cache hit rate + billed savings across 10 production LLMs via OpenRouter. 389 calls × $1.79 = receipts table for "90% off cached input" claim. | MIT |
 | **[`ru-pulse/`](./ru-pulse)** | Open RU-Telegram corpus + analytics. 7,405 posts from 50 channels (RU dev / AI / релокант diaspora). Reproducible scrape, weekly digest scripts, citable via `CITATION.cff`. | MIT |
 
 ---

@@ -7,6 +7,18 @@ log records repo-level changes (root README, contribution scaffolding,
 cross-library housekeeping). Per-library changelogs live inside each
 library directory.
 
+## [Unreleased] — 2026-05-05
+
+### Added
+
+- New library: **`cache-lab/`** — stdlib-only benchmark of real prompt-cache
+  hit rate and billed savings across 10 production LLMs via OpenRouter
+  (Claude Haiku/Sonnet/Opus, GPT-4o family, GPT-5.5, Gemini 2.5 Flash/Pro,
+  DeepSeek v3.1, Llama 3.3-70b). Includes prefix-size scaling
+  (5K/30K/100K), provider-pin sanity tests, BudgetTracker, append-write
+  JSONL, 10 unit tests. Backs the upcoming "Real cached-token discounts"
+  post.
+
 ## [Unreleased] — 2026-04-29
 
 ### Added

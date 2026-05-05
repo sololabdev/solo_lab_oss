@@ -1,0 +1,3 @@
+# cache-lab is stdlib-only.
+# Tests use pytest:
+pytest>=7
