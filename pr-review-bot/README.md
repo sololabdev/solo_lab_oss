@@ -140,14 +140,15 @@ endpoint runs Solo Lab's brand-voice judge under the hood.
 
 ## Honest scope
 
-- ✅ v1 ships brand-voice + tabu-word lint. Deterministic. No LLM in the
-  hot path; rules are explicit.
-- ✅ Free tier of 10 reviews/day per repo is real and live.
-- 🚧 Code review is v2. The action accepts `review-style: code` today
-  and the server returns a "not yet" finding — no surprise charges, no
-  fake outputs.
-- 🚧 Inline mode is v2. v1 always posts a summary comment; `comment-mode:
-  inline` is accepted for forward compatibility.
+- **v1 — live.** Brand-voice + tabu-word lint. Deterministic. No LLM in
+  the hot path; rules are explicit.
+- **v1 — live.** Free tier of 10 reviews/day per repo.
+- **v2 — accepted, returns "not yet".** Code review. The action accepts
+  `review-style: code` today and the server returns a "not yet" finding —
+  no surprise charges, no fake outputs.
+- **v2 — accepted, returns "not yet".** Inline mode. v1 always posts a
+  summary comment; `comment-mode: inline` is accepted for forward
+  compatibility.
 
 ## Development
 
