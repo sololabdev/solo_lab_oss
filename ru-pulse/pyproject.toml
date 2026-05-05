@@ -1,0 +1,112 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ru_pulse"
+version = "0.2.1"
+description = "Russian-language Telegram corpus engine: ethical scraping, prompt-injection defense, voice fingerprinting, sub-corpus lens, weekly pulse digests"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+authors = [{ name = "Solo Lab", email = "hi@solo-lab.dev" }]
+maintainers = [{ name = "Solo Lab", email = "hi@solo-lab.dev" }]
+keywords = [
+    "telegram",
+    "telegram-scraper",
+    "telegram-dataset",
+    "tg-corpus",
+    "corpus",
+    "corpus-linguistics",
+    "russian",
+    "russian-nlp",
+    "russian-telegram",
+    "nlp",
+    "nltk-alternative",
+    "linguistic-analysis",
+    "voice-fingerprint",
+    "voice-lint",
+    "prompt-injection",
+    "prompt-injection-defense",
+    "llm-security",
+    "sanitize",
+    "research-engine",
+    "diaspora",
+    "founders",
+    "ai-content",
+    "weekly-digest",
+    "deterministic-analytics",
+    "no-mtproto",
+    "mtproto-free",
+    "ethical-scraping",
+    "tg-public-preview",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: Russian",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Sociology",
+    "Topic :: Communications :: Chat",
+    "Topic :: Text Processing :: Linguistic",
+    "Topic :: Internet :: WWW/HTTP :: Indexing/Search",
+    "Topic :: Security",
+    "Typing :: Typed",
+]
+dependencies = [
+    "requests>=2.32",
+    "beautifulsoup4>=4.12",
+    "lxml>=5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+    "mypy>=1.10",
+]
+
+[project.scripts]
+ru-pulse-fetch = "ru_pulse.fetch:main"
+ru-pulse-incremental = "ru_pulse.daily_incremental:main"
+ru-pulse-analyze = "ru_pulse.analyze:main"
+ru-pulse-voice = "ru_pulse.voice_fingerprint:main"
+ru-pulse-topics = "ru_pulse.topics:main"
+ru-pulse-dashboard = "ru_pulse.dashboard:main"
+ru-pulse-verify = "ru_pulse.verify:main"
+ru-pulse-probe = "ru_pulse.probe:main"
+ru-pulse-lens = "ru_pulse.diaspora_lens:main"
+ru-pulse-weekly = "ru_pulse.weekly_pulse:main"
+voice-lint = "ru_pulse.voice_lint:_cli"
+
+[project.urls]
+Homepage = "https://github.com/solo-lab/ru_pulse"
+Documentation = "https://github.com/solo-lab/ru_pulse#readme"
+Repository = "https://github.com/solo-lab/ru_pulse"
+Issues = "https://github.com/solo-lab/ru_pulse/issues"
+Changelog = "https://github.com/solo-lab/ru_pulse/blob/main/CHANGELOG.md"
+Security = "https://github.com/solo-lab/ru_pulse/blob/main/SECURITY.md"
+
+[tool.setuptools]
+packages = ["ru_pulse"]
+package-dir = { "ru_pulse" = "." }
+
+[tool.setuptools.package-data]
+ru_pulse = ["channels.txt", "*.sh", "py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-q"

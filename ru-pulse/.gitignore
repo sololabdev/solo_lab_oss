@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local data — corpus + snapshots NEVER committed
+data/corpus.db
+data/corpus.db-shm
+data/corpus.db-wal
+data/*.db-journal
+data/backups/
+data/snapshots/
+
+# Reports — generated JSON not committed (large + reproducible from code+corpus)
+reports/*.json
+
+# Logs
+*.log
+
+# Local environment
+.env
+.envrc
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

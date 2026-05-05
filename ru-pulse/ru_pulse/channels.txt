@@ -1,0 +1,67 @@
+# RU Pulse — final 50-channel taxonomy (validated alive 2026-05-02)
+# Format: channel:bucket
+# Comments allowed; whitespace ignored.
+
+# === ai_core (15) — RU AI/ML focused, our nearest neighbours ===
+neuraldeep:ai_core
+seeallochnaya:ai_core
+denissexy:ai_core
+data_secrets:ai_core
+ai_newz:ai_core
+llm_under_hood:ai_core
+abstractDL:ai_core
+gonzo_ML:ai_core
+partially_unsupervised:ai_core
+boris_again:ai_core
+cgevent:ai_core
+alexs_journal:ai_core
+ainastia:ai_core
+singularityfm:ai_core
+mishin_learning:ai_core
+
+# === dev (10) — classic RU dev/eng community ===
+addmeto:dev
+tech_b0lt_Genona:dev
+defront:dev
+backendsecret:dev
+htmlshit:dev
+webstandards_ru:dev
+ru_javascript:dev
+itbeard:dev
+vibe_coder:dev
+nlpub:dev
+
+# === ml_aggregator (5) — paper/news aggregators ===
+ai_machinelearning_big_data:ml_aggregator
+xor_journal:ml_aggregator
+gradientdude:ml_aggregator
+arxiv_ml:ml_aggregator
+DeepLearning_ru:ml_aggregator
+
+# === indie_solo (6) — solo founder / relocant / personal brand ===
+microfounders:indie_solo
+proproduct:indie_solo
+it_relocant:indie_solo
+durov:indie_solo
+paveldurov_blog:indie_solo
+relocate_world:indie_solo
+
+# === news_aggregator (6) — broadcast voice (calibration ref) ===
+gptpublic:news_aggregator
+vc_news:news_aggregator
+llmnews:news_aggregator
+sber_gpt:news_aggregator
+TochkiNadAI:news_aggregator
+hiaimedia:news_aggregator
+
+# === hype_listicle (5) — anti-model, what NOT to sound like ===
+gpt_news:hype_listicle
+neuralpony:hype_listicle
+neuraldvig:hype_listicle
+larkinmd07:hype_listicle
+belkin_digital:hype_listicle
+
+# === prompt_specific (3) — narrow niche ===
+prompt_design:prompt_specific
+prompt_engineering_ru:prompt_specific
+experimentalchill:prompt_specific

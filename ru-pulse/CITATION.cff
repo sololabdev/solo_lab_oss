@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+title: "ru_pulse — Russian Telegram corpus & analysis engine"
+message: "If you use this corpus or its analytical artefacts, please cite as below."
+type: software
+authors:
+  - name: Solo Lab
+    email: hi@solo-lab.dev
+    website: https://solo-lab.dev
+repository-code: "https://github.com/solo-lab/ru_pulse"
+url: "https://github.com/solo-lab/ru_pulse"
+abstract: >
+  ru_pulse is an ethical, MTProto-free Russian-language Telegram corpus
+  engine. It scrapes only the public t.me/s/ HTML preview, applies a
+  three-layer prompt-injection defense, computes deterministic per-channel
+  voice fingerprints, runs sub-corpus PMI/lift analyses, and emits weekly
+  diff digests over a 12-bucket taxonomy (AI core, dev, dev jobs / hiring,
+  diaspora / relocant, founders' diary, hype / listicle, indie solo, ML
+  aggregator, news aggregator, product marketing, prompt-specific, research
+  papers). v0.2.1 corpus: 241 channels, 41,078 posts, 5.74M tokens.
+keywords:
+  - telegram
+  - russian
+  - nlp
+  - corpus-linguistics
+  - voice-fingerprint
+  - prompt-injection
+license: MIT
+version: "0.2.1"
+date-released: "2026-05-03"
