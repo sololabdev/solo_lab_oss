@@ -15,8 +15,8 @@ The marketing claim is "90% off cached input." This harness measures
 identical-prefix calls. No SDK, no provider abstraction — bare
 `urllib.request` against OpenRouter's chat-completions endpoint.
 
-Backs the long-form post _"Real cached-token discounts across 10 LLMs —
-389 calls, $1.79, receipts inside."_ (link tk).
+Methodology and full findings documented in the tables below. Total cost
+of the reference run: $1.79 for 389 calls.
 
 ## Reproduce in 60 seconds
 
