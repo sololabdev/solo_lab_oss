@@ -272,16 +272,25 @@ def score_from_issues(issues: list[str], elements_count: int) -> float:
 
 
 async def judge_async(html: str, brief: str, template_name: str,
-                      width: int = 1080, height: int = 1080,
+                      width: int = 1080, height: int = 1500,
                       selectors: list[str] | None = None) -> dict:
     """Run the structural judge against rendered HTML.
 
     `selectors`: optional list of CSS selectors to track. If None, uses
     the bundled TRACKED_SELECTORS list (tuned for `.headline`, `.deck`,
     etc.). Override for templates with different class conventions.
+
+    Viewport defaults to 1080x1500 — fits both 1x1 (1080x1080) and 4x5
+    (1080x1350) templates without clipping. Actual canvas dims are read
+    at render time from `.stage`/body and used for overflow detection,
+    so a 1350-tall body never trips the bottom-edge check against the
+    1080 default.
     """
     layout = await extract_layout(html, width, height, selectors=selectors)
-    issues, fixes = detect_issues(layout, width, height)
+    canvas = layout.get("canvas") or {}
+    cw = canvas.get("width") or width
+    ch = canvas.get("height") or height
+    issues, fixes = detect_issues(layout, cw, ch)
     score = score_from_issues(issues, len(layout["elements"]))
     verdict = ("APPROVE" if score >= 0.85 and not issues else
                "HEAL" if fixes else
@@ -301,7 +310,7 @@ async def judge_async(html: str, brief: str, template_name: str,
 
 
 def judge(png_path: str, brief: str, template_name: str,
-          width: int = 1080, height: int = 1080,
+          width: int = 1080, height: int = 1500,
           html: str | None = None) -> dict:
     """Synchronous wrapper. Two call modes:
 
@@ -326,7 +335,7 @@ if __name__ == "__main__":
     name = sys.argv[2]
     brief = " ".join(sys.argv[3:4])
     w = int(sys.argv[4]) if len(sys.argv) > 4 else 1080
-    h = int(sys.argv[5]) if len(sys.argv) > 5 else 1080
+    h = int(sys.argv[5]) if len(sys.argv) > 5 else 1500
     html = pathlib.Path(html_path).read_text()
     report = asyncio.run(judge_async(html, brief, name, w, h))
     # Drop _layout for cleaner stdout
